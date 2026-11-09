@@ -31,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   alignment: Alignment.topCenter,
                   child: Padding(
                   padding: const EdgeInsets.only(top: 200 - 50),
+      
                     child: Stack(
                       alignment: AlignmentGeometry.bottomRight,
                       children: [
