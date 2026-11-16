@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -43,13 +44,35 @@ class _SignInScreenState extends State<SignInScreen> {
                 decoration: InputDecoration(
                   labelText: "Masukkan Password",
                   border: OutlineInputBorder(),
+                  errorText: _errorText.isNotEmpty ? _errorText : null,
+                  suffixIcon: IconButton(onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  }, icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility))
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
               //todo 7 Sign in
+              const SizedBox(height: 20,),
+              ElevatedButton(onPressed: (){},
+               child: const Text ('Sign in')),
               //todo 8 Sign up
+              const SizedBox(height: 20,),
+              RichText(
+                text: TextSpan(
+                text: 'Belum Punya Akun',
+                style: TextStyle(color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                  fontSize: 16,
+                ),
+                recognizer: TapGestureRecognizer()..onTap=(){
+
+                }
+              )
+              ),
             ]
           ),
         ),
