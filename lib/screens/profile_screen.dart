@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wisata_candi_2627_51/providers/auth_provider.dart';
+import 'package:flutter_wisata_candi_2627_51/providers/favorite_provider.dart';
+import 'package:flutter_wisata_candi_2627_51/screens/sign_in_screen.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -8,25 +12,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  //Todo 1 variabel
-  bool isSignedIn= false;
-  String fullName="Muhammad Rachmadi";
-  String userName="Rachmadi";
-  int favoriteCandiCount=0;
-
-  void signIn(){
-    setState((){
-      isSignedIn=true;
-    });
-  }
-  void signOut(){
-    setState((){
-      isSignedIn=false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final favoriteCount = context.watch<FavoriteProvider>().count;
+    final auth = context.watch<AuthProvider>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -35,13 +25,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: double.infinity,
             color: Colors.deepPurple,
           ),
+
           Column(
             children: [
-              //Todo 2 Profile Header
+              // Todo 2 Profile Header
               Align(
-                alignment: AlignmentGeometry.topCenter,
+                alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top : 200-50),
+                  padding: const EdgeInsets.only(top: 150),
                   child: Stack(
                     alignment: Alignment.bottomRight,
                     children: [
@@ -52,71 +43,143 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: const CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage('images/placeholder_image.png'),
+                          backgroundImage: AssetImage(
+                            'images/placeholder_image.png',
+                          ),
                         ),
                       ),
-                      if(isSignedIn)
+
+                      if (auth.isSignedIn)
                         IconButton(
-                          onPressed: () {
-                            
-                          }, 
-                          icon: Icon(Icons.camera_alt, color : Colors.deepPurple))
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.deepPurple,
+                          ),
+                        ),
                     ],
                   ),
                 ),
               ),
-              //Todo 3 Profile Info
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width/3,
-                    child : Row(children: [
-                      Icon(Icons.lock, color: Colors.amber,),
-                      SizedBox(width: 8,),
-                      Text("Pengguna", style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold),)
-                    ],)
-                  ),
-                  Expanded(child: Text(' : $userName', style: TextStyle(fontSize: 18),))
-                ],
-              ),
-              SizedBox(height: 4,),
-              Divider(color :Colors.deepPurple),
 
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width/3,
-                    child : Row(children: [
-                      Icon(Icons.person, color: Colors.blue,),
-                      SizedBox(width: 8,),
-                      Text("Name", style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold),)
-                    ],)
-                  ),
-                  Expanded(child: Text(' : $fullName', style: TextStyle(fontSize: 18),))
-                ],
-              ),
-              SizedBox(height: 4,),
-              Divider(color :Colors.deepPurple),
+              const SizedBox(height: 16),
 
+              // Todo 3 Profile Info
+
+              // Pengguna
               Row(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width/3,
-                    child : Row(children: [
-                      Icon(Icons.favorite, color: Colors.red,),
-                      SizedBox(width: 8,),
-                      Text("Favorite", style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold),)
-                    ],)
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: const Row(
+                      children: [
+                        Icon(Icons.lock, color: Colors.amber),
+                        SizedBox(width: 8),
+                        Text(
+                          "Pengguna",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Expanded(child: Text(' : $favoriteCandiCount', style: TextStyle(fontSize: 18),))
+                  Expanded(
+                    child: Text(
+                      ' : ${auth.isSignedIn ? auth.userName : "Pengguna"}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 4,),
-              Divider(color :Colors.deepPurple),
-              SizedBox(height : 16,),
-              //Todo 4 Profile Action
-              isSignedIn ? TextButton(onPressed: () {signOut();}, child: const Text("Signed Out"))
-              : TextButton(onPressed: () {signIn();}, child: const Text("Signed In"))
+
+              const SizedBox(height: 4),
+              const Divider(color: Colors.deepPurple),
+
+              // Name
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: const Row(
+                      children: [
+                        Icon(Icons.person, color: Colors.blue),
+                        SizedBox(width: 8),
+                        Text(
+                          "Name",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      ' : ${auth.isSignedIn ? auth.userName : "Belum Login"}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 4),
+              const Divider(color: Colors.deepPurple),
+
+              // Favorite
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: const Row(
+                      children: [
+                        Icon(Icons.favorite, color: Colors.red),
+                        SizedBox(width: 8),
+                        Text(
+                          "Favorite",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      ' : $favoriteCount',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 4),
+              const Divider(color: Colors.deepPurple),
+
+              const SizedBox(height: 16),
+
+              // Todo 4 Profile Action
+              auth.isSignedIn
+                  ? TextButton(
+                    onPressed: () {
+                      context.read<AuthProvider>().signOut();
+                    },
+                    child: const Text("Sign Out"),
+                  )
+                  : TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Sign In"),
+                  ),
             ],
           ),
         ],
