@@ -4,20 +4,26 @@ import 'package:flutter_wisata_candi_2627_51/providers/favorite_provider.dart';
 import 'package:flutter_wisata_candi_2627_51/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
+
+
 class DetailScreen extends StatelessWidget {
   final Candi candi;
 
   const DetailScreen({super.key, required this.candi});
 
+
   @override
   Widget build(BuildContext context) {
-    final isFav = context.watch<FavoriteProvider>().isFavorite(candi.name);
+    final isFav = context
+    .watch<FavoriteProvider>()
+    .isFavorite(candi.name);
+
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // DetailHeader
+            // TODO: DetailHeader
             Stack(
               children: [
                 Padding(
@@ -53,12 +59,13 @@ class DetailScreen extends StatelessWidget {
               ],
             ),
 
+            // DetailInfo
             // DetailInfo Atas
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -71,20 +78,20 @@ class DetailScreen extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          context.read<FavoriteProvider>().toggle(candi.name);
+                              context.read<FavoriteProvider>().toggle(candi.name);
                         },
-                        icon: const Icon(Icons.favorite_border),
-                        color: isFav ? Colors.red : null,
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: isFav ? Colors.red : null,
+                          ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-
             // DetailInfo Tengah
-            const SizedBox(height: 16),
-
+            SizedBox(height: 16),
             Row(
               children: [
                 const Icon(Icons.place, color: Colors.red),
@@ -96,10 +103,9 @@ class DetailScreen extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(': ${candi.location}'),
+                Text(": ${candi.location}"),
               ],
             ),
-
             Row(
               children: [
                 const Icon(Icons.calendar_month, color: Colors.blue),
@@ -111,10 +117,9 @@ class DetailScreen extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(': ${candi.built}'),
+                Text(": ${candi.built}"),
               ],
             ),
-
             Row(
               children: [
                 const Icon(Icons.house, color: Colors.green),
@@ -126,38 +131,31 @@ class DetailScreen extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(': ${candi.type}'),
+                Text(": ${candi.type}"),
               ],
             ),
-
             const SizedBox(height: 16),
             Divider(color: Colors.deepPurple.shade100),
             const SizedBox(height: 16),
-
             const Text(
               'Deskripsi',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 16),
             Text(candi.description),
-
             // DetailGallery
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Divider(color: Colors.deepPurple.shade100),
-
                   const Text(
                     'Galeri',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-
                   const SizedBox(height: 10),
-
-                  // ListView.builder untuk image gallery horizontal
+                  //SixeBox dibawah ini untuk image gallery, gunakan ListView.builder agar bisa di scroll horizontal
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
@@ -182,9 +180,7 @@ class DetailScreen extends StatelessWidget {
                       },
                     ),
                   ),
-
                   const SizedBox(height: 4),
-
                   const Text(
                     'Tap untuk memperbesar',
                     style: TextStyle(fontSize: 12, color: Colors.black54),
@@ -195,17 +191,17 @@ class DetailScreen extends StatelessWidget {
           ],
         ),
       ),
-
-      // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ProfileScreen()),
-          );
-        },
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => const ProfileScreen()),
+            );
+          },
         child: const Icon(Icons.person),
       ),
+
     );
   }
 }

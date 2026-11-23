@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter/foundation.dart';
+ 
 class AuthProvider extends ChangeNotifier {
-  bool isSignedIn = false;
-  String userName = '';
-
-  void signIn(String name) {
-    userName = name;
-    isSignedIn = true;
+  bool _isSignedIn = false;
+  String _username = '';
+  bool get isSignedIn => _isSignedIn;
+  String get username => _username;
+ 
+  void signIn(String username) {
+    _isSignedIn = true;
+    _username = username;
     notifyListeners();
   }
-
   void signOut() {
-    userName = '';
-    isSignedIn = false;
+    _isSignedIn = false;
+    _username = '';
     notifyListeners();
   }
 }
