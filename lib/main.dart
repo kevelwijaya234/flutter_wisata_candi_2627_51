@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wisata_candi_2627_51/data/candi_data.dart';
 import 'package:flutter_wisata_candi_2627_51/providers/favorite_provider.dart';
 import 'package:flutter_wisata_candi_2627_51/screens/detail_screen.dart';
-import 'package:flutter_wisata_candi_2627_51/screens/profile_screen.dart';
-import 'package:flutter_wisata_candi_2627_51/screens/sign_in_screen.dart';
+import 'package:flutter_wisata_candi_2627_51/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +41,8 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       // ),
-      home: DetailScreen(candi: candiList[0]),
+      // home: DetailScreen(candi: candiList[0]),
+      home: HomeScreen(),
     );
   }
 }
